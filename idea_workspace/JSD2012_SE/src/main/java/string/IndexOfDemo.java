@@ -17,8 +17,9 @@ public class IndexOfDemo {
         System.out.println(index);
         index = str.indexOf("in", 3);
         System.out.println(index);
-
-        index=str.lastIndexOf("in");
+        index = str.indexOf("in", 10);
+        System.out.println(index);
+        index = str.lastIndexOf("in");
         System.out.println(index);
     }
 }
