@@ -6,7 +6,7 @@ package string;
 public class StringDemo {
     public static  void main(String [] args){
         System.out.println("HAHA");
-        Syetem.out println("HelloWorld!!");
+        System.out.println("HelloWorld!!");
     }
 
 }
