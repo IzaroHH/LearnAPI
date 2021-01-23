@@ -29,11 +29,12 @@ import java.util.Scanner;
 public class Test06 {
     public static void main(String[] args) {
         String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        Random random = new Random();
+        int times = 4;
+        Random ran = new Random();
         StringBuilder arr = new StringBuilder();
-        char[] ch = new char[4];
-        for (int i = 0; i < 4; ++i) {
-            int number = random.nextInt(62);
+        char[] ch = new char[times];
+        for (int i = 0; i < times; ++i) {
+            int number = ran.nextInt(62);
             ch[i] = str.charAt(number);
             arr.append(ch[i]);
         }
