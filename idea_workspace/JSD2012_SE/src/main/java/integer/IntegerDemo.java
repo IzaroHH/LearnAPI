@@ -1,13 +1,18 @@
 package integer;
 
 /**
+ * 包装类
+ * <p>
+ * 包装类是为了解决基本类型不能直接参与面向对象开发的问题，是基本
+ * <p>
+ * 类型可以以对象的方式存在
+ * <p>
+ * 包装类型都定义在java.lang包中作为基础使用。6个数字类型的包装类
+ * <p>
+ * 继承自Number，其余两个直接继承Object.
+ *
  * @Author: Izaro
  * @Date: 2021/1/25 16:50
- * 包装类
- * 包装类是为了解决基本类型不能直接参与面向对象开发的问题，是基本
- * 类型可以以对象的方式存在
- * 包装类型都定义在java.lang包中作为基础使用。6个数字类型的包装类
- * 继承自Number，其余两个直接继承Object.
  */
 public class IntegerDemo {
     public static void main(String[] args) {

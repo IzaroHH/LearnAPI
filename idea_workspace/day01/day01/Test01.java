@@ -3,7 +3,7 @@ package day01;
 /**
  * 实现方法,完成获取下列文件名中的后缀名
  *
- * @author Xiloer
+ * @author Izaro
  * <p>
  * 单词记一记:
  * file   文件

@@ -1,10 +1,10 @@
 package string;
 
 /**
+ * 获取制定位置上的字符
  * @Author: Izaro
  * @Date: 2021/1/22 16:49
  * char charAt(int index)
- * 获取制定位置上的字符
  */
 public class CharAtDemo {
     public static void main(String[] args) {

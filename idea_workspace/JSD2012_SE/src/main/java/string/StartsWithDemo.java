@@ -1,13 +1,18 @@
 package string;
 
 /**
- * @Author: Izaro
- * @Date: 2021/1/22 16:54
  * boolean startsWith(String str)
+ * <p>
  * 判断字符串是否是以给定的字符串开始的
+ *
+ * <p>
  * <p>
  * boolean endsWith(String str)
+ * <p>
  * 判断字符串是否是以给定的字符串结尾的
+ *
+ * @Author: Izaro
+ * @Date: 2021/1/22 16:54
  */
 public class StartsWithDemo {
     public static void main(String[] args) {

@@ -1,13 +1,16 @@
 package string;
 
 /**
+ * 将当前字符串中的英文部分转换为全小写
+ * <p>
+ * String toUpperCase()
+ * <p>
+ * 将当前字符串中的英文部分转换为全大写
+ *
  * @Author: Izaro
  * @Date: 2021/1/22 16:54
  * String toLowerCase()
  * <p>
- * 将当前字符串中的英文部分转换为全小写
- * String toUpperCase()
- * 将当前字符串中的英文部分转换为全大写
  */
 public class ToUpperCaseDemo {
     public static void main(String[] args) {

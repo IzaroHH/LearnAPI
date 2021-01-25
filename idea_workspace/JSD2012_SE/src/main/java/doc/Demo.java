@@ -11,7 +11,6 @@ public class Demo {
      * sayHello中用到的问候语
      */
     public static final String INFO = "你好！";
-
     /**
      * 为指定的用户添加一个问候语
      * @param name

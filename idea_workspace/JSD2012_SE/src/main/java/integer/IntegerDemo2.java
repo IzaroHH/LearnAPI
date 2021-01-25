@@ -3,10 +3,11 @@ package integer;
 import javax.sound.sampled.Line;
 
 /**
+ * 包装类型常见功能
  * @Author: Izaro
  * @Date: 2021/1/25 16:57
- * 包装类型常见功能
  */
+
 public class IntegerDemo2 {
     public static void main(String[] args) {
         int imax = Integer.MAX_VALUE;

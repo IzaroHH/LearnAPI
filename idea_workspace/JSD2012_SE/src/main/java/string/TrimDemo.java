@@ -1,10 +1,12 @@
 package string;
 
 /**
+ * String trim()
+ * <p>
+ * 去除字符串两边的空白字符
+ *
  * @Author: Izaro
  * @Date: 2021/1/22 16:41
- * String trim()
- * 去除字符串两边的空白字符
  */
 public class TrimDemo {
     public static void main(String[] args) {

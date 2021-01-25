@@ -1,10 +1,10 @@
 package string;
 
 /**
+ * 返回给定字符串在当前字符串的位置，如果当前字符串不包含给定内容则返回值为-1
  * @Author: Izaro
  * @Date: 2021/1/22 15:42
  * int indexOf(String str)
- * 返回给定字符串在当前字符串的位置，如果当前字符串不包含给定内容则返回值为-1
  */
 public class IndexOfDemo {
     public static void main(String[] args) {
