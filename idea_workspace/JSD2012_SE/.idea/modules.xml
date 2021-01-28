@@ -4,8 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../LearnWork/LearnWork.iml" filepath="$PROJECT_DIR$/../LearnWork/LearnWork.iml" />
       <module fileurl="file://$USER_HOME$/Desktop/bindemo/bindemo.iml" filepath="$USER_HOME$/Desktop/bindemo/bindemo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../LearnWork/day01/day01.iml" filepath="$PROJECT_DIR$/../LearnWork/day01/day01.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../LearnWork/晚课作业_2/晚课作业_2.iml" filepath="$PROJECT_DIR$/../LearnWork/晚课作业_2/晚课作业_2.iml" />
     </modules>
   </component>
 </project>
