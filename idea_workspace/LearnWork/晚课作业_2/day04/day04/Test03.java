@@ -26,27 +26,33 @@ public class Test03 {
         System.out.println("请输入密码：");
         String password = sc.nextLine();
         RandomAccessFile a1 = new RandomAccessFile("user.dat", "rw");
-        for (int i = 0; i < a1.length(); i++) {
+        boolean login = false;
+        for (int i = 0; i < a1.length() / 100; i++) {
             byte[] data = new byte[32];
             a1.read(data);
             String username1 = new String(data, "UTF-8").trim();
             a1.read(data);
             String password1 = new String(data, "UTF-8").trim();
-            if (username.equals(username1) && password.equals(password1)) {
-                System.out.println("登陆成功");
-                break;
+            if (username.equals(username1)) {
+                login = true;
             } else {
                 a1.seek(i * 100 + 100);
             }
-            while (i == a1.length() / 100 - 1) {
-                if (!username.equals(username1)) {
-                    System.out.println("查无此人");
+            if (login) {
+                if (password.equals(password1)) {
+                    System.out.println("登陆成功");
                     break;
                 } else {
                     System.out.println("登陆失败，密码不正确");
                     break;
                 }
             }
+            if(i==a1.length()/100-1){
+                System.out.println("查无此人");
+                break;
+            }
         }
+        a1.close();
     }
 }
+
