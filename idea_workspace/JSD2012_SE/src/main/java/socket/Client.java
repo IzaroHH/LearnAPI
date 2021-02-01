@@ -1,8 +1,11 @@
 package socket;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Scanner;
 
 /**
  * 聊天室客户端
@@ -33,7 +36,7 @@ public class Client {
             System.out.println("正在连接服务器...");
             //localhost表示本机IP
             //实例化的过程就是连接的过程,若连接服务端会抛出异常
-            socket = new Socket("176.212.28.143", 8088);
+            socket = new Socket("176.212.28.144", 8088);
             System.out.println("与服务端建立连接!");
         } catch (IOException e) {
             e.printStackTrace();
@@ -43,22 +46,53 @@ public class Client {
     /**
      * 客户端开始工作的方法
      */
-    public void start() {
-        try {
+    public void start() throws IOException {
+        try (
             /*
             Socket提供的方法
             OutputStream getOutputStream()
             该方法会返回一个字节输出流,通过这个输出流写出的字节
             会通过网络发送给远端计算机
              */
-            OutputStream out=socket.getOutputStream();
+//                OutputStream out = socket.getOutputStream();
+//                OutputStreamWriter osw= new OutputStreamWriter(
+//                        out,"UTF-8");
+//                //高级流,缓冲字符输出流。负责块写文本书加速
+//                BufferedWriter bw = new BufferedWriter(osw);
+//                //高级流，PW。负责按行写字符串，并可以自动行刷新
+//                PrintWriter pw = new PrintWriter(bw,true);
+
+                PrintWriter pw = new PrintWriter(
+                        new BufferedWriter(
+                                new OutputStreamWriter(
+                                        socket.getOutputStream(), "UTF-8"
+                                )
+                        ), true
+                );
+        ) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("请开始输入内容,单独输入exit退出");
+            while (true) {
+                String line = scanner.nextLine().trim();
+                if ("exit".equals(line)) {
+                    break;
+                }
+                //通过输出流给服务端发送一句话
+                pw.println(line);
+            }
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                //最终不在通讯时要关闭socket(相当于挂电话)
+                //socket关闭后,通过socket获取的输入流与输出流就自动关闭了
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
     }
-
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Client client = new Client();
         client.start();
     }

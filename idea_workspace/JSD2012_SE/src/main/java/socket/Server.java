@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ListResourceBundle;
 
 /**
  * 聊天室服务端
@@ -50,25 +49,55 @@ public class Server {
     public void start() {
         try {
             /*
-            ServerSocket提供的方法:
-            Socket accept()
-            该方法是一个阻塞方法,调用后程序就"卡住"了,此时开始
-            等待客户端的连接,一旦一个客户端建立连接,此时accept
-            方法就会立即返回一个Socket实例.通过
-            这个Socket就可以与连接的客户端进行交互了.
+              ServerSocket提供的方法:
+              Socket accept()
+              该方法是一个阻塞方法,调用后程序就"卡住"了,此时开始
+              等待客户端的连接,一旦一个客户端建立连接,此时accept
+              方法就会立即返回一个Socket实例.通过
+              这个Socket就可以与连接的客户端进行交互了.
              */
-            System.out.println("等待客户端连接...");
-            Socket socket=serverSocket.accept();
-            System.out.println("一个客户端连接了!");
-            InputStream in =socket.getInputStream();
-            InputStreamReader br =new BufferedReader(isr);
-            Buffered
+            while (true) {
+                System.out.println("等待客户端连接...");
+                Socket socket = serverSocket.accept();
+                System.out.println("一个客户端连接了!");
+                //启动一个线程处理与该客户端的交互
+                Runnable handler = new ClientHandler(socket);
+                Thread t = new Thread(handler);
+                t.start();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     public static void main(String[] args) {
         Server server = new Server();
         server.start();
+    }
+
+    private class ClientHandler implements Runnable {
+        private Socket socket;
+        public ClientHandler (Socket socket){
+            this.socket=socket;
+        }
+        public void run() {
+            try {
+                /*
+                  Socket提供的方法:
+                  InputStream getInputStream()
+                  通过socket获取的输入流可以读取远端计算机发送过来的数据
+                */
+                InputStream in = socket.getInputStream();
+                InputStreamReader isr = new InputStreamReader(in, "UTF-8");
+                BufferedReader br = new BufferedReader(isr);
+
+                String line;
+                while ((line = br.readLine()) != null) {
+                    System.out.println("客户端说:" + line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
