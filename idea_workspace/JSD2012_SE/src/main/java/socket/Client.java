@@ -1,9 +1,6 @@
 package socket;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -46,7 +43,12 @@ public class Client {
     /**
      * 客户端开始工作的方法
      */
-    public void start() throws IOException {
+    public void start(){
+        //先启动读取服务端发送过来消息的线程
+        ServerHandler handler=new ServerHandler();
+        Thread t=new Thread(handler);
+        t.setDaemon(true);
+        t.start();
         try (
             /*
             Socket提供的方法
@@ -61,7 +63,6 @@ public class Client {
 //                BufferedWriter bw = new BufferedWriter(osw);
 //                //高级流，PW。负责按行写字符串，并可以自动行刷新
 //                PrintWriter pw = new PrintWriter(bw,true);
-
                 PrintWriter pw = new PrintWriter(
                         new BufferedWriter(
                                 new OutputStreamWriter(
@@ -92,8 +93,30 @@ public class Client {
             }
         }
     }
+
     public static void main(String[] args) throws IOException {
         Client client = new Client();
         client.start();
+    }
+
+    //该线程负责读取服务端发送过来的消息
+    private class ServerHandler implements Runnable {
+        public void run() {
+            try (
+                    BufferedReader br = new BufferedReader(
+                            new InputStreamReader(
+                                    socket.getInputStream(), "UTF-8"
+                            )
+                    );
+            ) {
+                String line;
+                //读取服务端发送过来的每一行字符串并输出到客户端的控制台上
+                while ((line = br.readLine()) != null) {
+                    System.out.println(line);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

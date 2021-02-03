@@ -1,11 +1,9 @@
 package socket;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Arrays;
 
 /**
  * 聊天室服务端
@@ -28,6 +26,10 @@ public class Server {
      * 如果我们把Socket比喻为电话,那么ServerSocket就相当于总机.
      */
     private ServerSocket serverSocket;
+    /**
+     * 用来保存所有客户端输出流的数组,用于让ClientHandler之间共享输出流广播消息使用
+     */
+    private PrintWriter[] allOut = {};
 
     public Server() {
         try {
@@ -77,10 +79,17 @@ public class Server {
 
     private class ClientHandler implements Runnable {
         private Socket socket;
-        public ClientHandler (Socket socket){
-            this.socket=socket;
+        private String host;//当前客户端的IP地址信息
+
+        public ClientHandler(Socket socket) {
+            this.socket = socket;
+            //通过socket获取远端计算机地址信息
+            host = socket.getInetAddress().getHostAddress();
         }
+
+        @Override
         public void run() {
+            PrintWriter pw = null;
             try {
                 /*
                   Socket提供的方法:
@@ -90,13 +99,58 @@ public class Server {
                 InputStream in = socket.getInputStream();
                 InputStreamReader isr = new InputStreamReader(in, "UTF-8");
                 BufferedReader br = new BufferedReader(isr);
+                //通过socket获取输出流用于给客户端发送消息
+                pw = new PrintWriter(
+                        new BufferedWriter(
+                                new OutputStreamWriter(
+                                        socket.getOutputStream(), "UTF-8"
+                                )
+                        ), true
+                );
+                //将当前对应客户端的输出流存入到共享数组allOut中,以便广播消息
+                //不行,每个线程都运行自己的ClientHandler,this就是这些ClientHandler
+//                  synchronized(this){
+                //不行,因为同步块中有扩容数组操作,allOut对象指向的数组对象在变化
+//                  synchronized(allOut){
 
+//                  synchronized(serverSocket){//可以
+                synchronized (Server.class) {//可以
+                    //1先对allOut数组扩容
+                    allOut = Arrays.copyOf(allOut, allOut.length + 1);
+                    //2将当前pw存入数组最后一个位置
+                    allOut[allOut.length - 1] = pw;
+                }
+                System.out.println(host + "上线了!当前在线人数:" + allOut.length);
                 String line;
                 while ((line = br.readLine()) != null) {
-                    System.out.println("客户端说:" + line);
+                    System.out.println(host + "说:" + line);
+                    //将消息发送给当前客户端
+                    for (int i = 0; i < allOut.length; i++) {
+                        allOut[i].println(host + "说:" + line);
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+            } finally {
+                //处理该客户端断开连接后的操作
+                //将对应当前客户端的输出流从共享数组allOut中删除
+                synchronized (Server.class) {
+                    for (int i = 0; i < allOut.length; i++) {
+                        if (pw == allOut[i]) {
+                            allOut[i] = allOut[allOut.length - 1];
+                            allOut = Arrays.copyOf(allOut, allOut.length - 1);
+                            break;
+                        }
+                    }
+                }
+                System.out.println(host + "下线了!当前在线人数:" + allOut.length);
+                try {
+                    //最终不再通讯时要关闭socket.(相当于挂电话)
+                    //socket关闭后,通过socket获取的输入流和输出流就自动关闭了
+                    socket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
