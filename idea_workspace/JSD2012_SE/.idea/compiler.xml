@@ -6,8 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="JSD2012bin" />
         <module name="JSD2012_SE" />
+        <module name="JSD2012bin" />
       </profile>
     </annotationProcessing>
   </component>
