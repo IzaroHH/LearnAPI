@@ -37,7 +37,7 @@ public class QueueDemo {
 
         //使用poll方法遍历则是一次性的
         while (queue.size() > 0) {
-            str = queue.poll();
+            String str = queue.poll();
             System.out.println(str);
         }
         System.out.println(queue);

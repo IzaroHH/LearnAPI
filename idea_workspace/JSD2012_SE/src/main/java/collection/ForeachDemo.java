@@ -36,15 +36,9 @@ public class ForeachDemo {
         //将当前集合转换为一个线程安全的集合
         c= Collections.synchronizedList(c);
         // Collections.synchronizedSet(set);
-        /*
-            当多个线程操作同一个集合时,首先应当选取使用线程安全的集合,同时遍历就不应当再使用迭代器,而应当使用foreach方法.这样操作做到与增删元素
-            互斥保证并发安全
-         */
-        c.forEach(Str-> System.out.println(str));
+        c.forEach(System.out::println);
         c.forEach(
-                (str)->{
-                    System.out.println(str);
-                }
+                System.out::println
         );
     }
 }
