@@ -140,14 +140,15 @@ public class HttpRequest {
                         parameter.put(paras[0], null);
                     }
                 }
-            } else {
-                requestURI = uri;
             }
-            System.out.println("requestURI:" + requestURI);
-            System.out.println("queryString:" + queryString);
-            System.out.println("parameter:" + parameter);
+        } else {
+            requestURI = uri;
         }
+        System.out.println("requestURI:" + requestURI);
+        System.out.println("queryString:" + queryString);
+        System.out.println("parameter:" + parameter);
     }
+
 
     /**
      * 2:解析消息头
@@ -243,6 +244,7 @@ public class HttpRequest {
 
     /**
      * 根据参数名获取参数值
+     *
      * @param name
      * @return
      */
