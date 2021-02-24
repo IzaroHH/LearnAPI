@@ -4,6 +4,8 @@ import com.webserver.http.EmptyRequestException;
 import com.webserver.http.HttpContext;
 import com.webserver.http.HttpRequest;
 import com.webserver.http.HttpResponse;
+import com.webserver.servlet.AdminServlet;
+import com.webserver.servlet.ChangeServlet;
 import com.webserver.servlet.LoginServlet;
 import com.webserver.servlet.RegServlet;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
@@ -48,6 +50,12 @@ public class ClientHandler implements Runnable {
                 servlet.service(request, response);
             } else if ("/myweb/loginUser".equals(path)) {
                 LoginServlet servlet = new LoginServlet();
+                servlet.service(request, response);
+            } else if ("/myweb/change_passwordUser".equals(path)) {
+                ChangeServlet servlet = new ChangeServlet();
+                servlet.service(request, response);
+            } else if ("/myweb/adminUser".equals(path)) {
+                AdminServlet servlet = new AdminServlet();
                 servlet.service(request, response);
             } else {
                 File file = new File("./webapps/" + path);
