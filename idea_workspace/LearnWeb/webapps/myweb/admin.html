@@ -3,10 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>管理员</title>
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script>
+        $(function () {
+            $("#content3").load('user.txt');
+        });
+    </script>
+
 </head>
 <body>
-<br><br><br><br><br><br><br><br><br>
-<h1 align="center" style="font-size: 100px;color:orangered">欢迎您,管理员!</h1>
 
+<br><br><br><br><br><br><br><br><br>
+<h1 align="center" style="font-size: 100px;color:orangered">欢迎您,管理员!</h1><br>
+<center><a href="./showAllUser">用户列表</a></center>
+<div id="content3">
+</div>
 </body>
 </html>
